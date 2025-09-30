@@ -1,0 +1,76 @@
+import sys
+import requests
+from datetime import datetime
+
+# ---------------- CONFIG ----------------
+WEBHOOK_URL = "https://discord.com/api/webhooks/......" # Your webhook there
+CLIENT_NAME = "Shrapnel The Director"
+AVATAR_URL = "https://i.imgur.com/R1Wmcra.png"  # Replace with your Imgur direct image URL
+DEBUG = False  # True = print JSON instead of sending
+# ----------------------------------------
+
+# Grab parameters from SABnzbd
+# $1 = Category, $2 = File/NZB name, $3 = Size (as passed from SABnzbd Parameters field)
+category = sys.argv[1] if len(sys.argv) > 1 else "Unknown"
+filename = sys.argv[2] if len(sys.argv) > 2 else "Unknown file"
+size = sys.argv[3] if len(sys.argv) > 3 else "Unknown"
+status = "completed" if category.lower() == "complete" else category.lower()
+
+# Skip notifications for running/incomplete downloads
+if status == "running":
+    exit()
+
+# Determine embed color and emoji
+if status == "completed":
+    color = 0x00FF00  # Green
+    status_emoji = "✅"
+    status_text = "Download Complete"
+elif status == "download":
+    color = 0xFFFF00  # Yellow
+    status_emoji = "⚠️"
+    status_text = "Download Running"
+elif status == "failed":
+    color = 0xFF0000  # Red
+    status_emoji = "❌"
+    status_text = "Download Failed"
+elif status == "pp":
+    color = 0xFFFF00  # Yellow
+    status_emoji = "⚠️"
+    status_text = "Post-processing Started"
+else:
+    color = 0xFFFF00  # Yellow
+    status_emoji = "⚠️"
+    status_text = f"Download Status: {status}"
+
+# Timestamp in ISO format
+timestamp = datetime.utcnow().isoformat()
+
+# Compose Discord embed
+embed = {
+    "username": CLIENT_NAME,
+    "avatar_url": AVATAR_URL,
+    "embeds": [{
+        "title": f"{status_emoji} {status_text}",
+        "color": color,
+        "fields": [
+            {"name": "Job:", "value": f"`{filename}`", "inline": False},
+            {"name": "Status:", "value": f"`{category}`", "inline": True},
+            {"name": "File:", "value": f"`{size}`", "inline": True},
+        ],
+        "author": {"name": CLIENT_NAME, "icon_url": AVATAR_URL},
+        "footer": {"text": CLIENT_NAME},
+        "timestamp": timestamp
+    }]
+}
+
+# Send or debug
+if DEBUG:
+    import json
+    print("DEBUG MODE - JSON payload:")
+    print(json.dumps(embed, indent=4))
+else:
+    try:
+        response = requests.post(WEBHOOK_URL, json=embed)
+        print(f"Discord response: {response.status_code} {response.text}")
+    except Exception as e:
+        print(f"Error sending Discord message: {e}")
