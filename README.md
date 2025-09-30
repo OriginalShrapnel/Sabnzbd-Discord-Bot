@@ -19,4 +19,4 @@ Send real-time SABnzbd download notifications to your Discord server using a sim
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/Sabnzbd-Discord-Bot.git
+git clone https://github.com/OriginalShrapnel/Sabnzbd-Discord-Bot.git
