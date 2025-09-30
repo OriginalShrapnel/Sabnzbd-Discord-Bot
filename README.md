@@ -35,5 +35,5 @@ In SABnzbd CONFIG - Notifications - Notification Script , add the script and set
 
 Get the latest release from GitHub:
 
-[Download Latest Release](https://github.com/OriginalShrapnel/SABnzbd-Discord-Notifier/releases/latest)
+[Download Latest Release](https://github.com/OriginalShrapnel/SABnzbd-Discord-Bot/releases/latest)
 
