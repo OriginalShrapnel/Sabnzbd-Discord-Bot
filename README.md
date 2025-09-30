@@ -19,11 +19,11 @@ In SABnzbd CONFIG - Notifications - Notification Script , add the script and set
 
 %c "%n" "%f"
 
-%c – Category
+%c – Job
 
-%n – Name of the download
+%n – Status
 
-%f – File path
+%f – File name
 
 ## Requirements
 
@@ -31,8 +31,9 @@ In SABnzbd CONFIG - Notifications - Notification Script , add the script and set
 - SABnzbd with script support
 - Discord webhook
 
-## Installation
+## Download
 
-1. Clone this repository:
-```bash
-git clone https://github.com/OriginalShrapnel/Sabnzbd-Discord-Bot.git
+Get the latest release from GitHub:
+
+[Download Latest Release](https://github.com/OriginalShrapnel/SABnzbd-Discord-Notifier/releases/latest)
+
