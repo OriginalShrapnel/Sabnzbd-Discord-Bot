@@ -9,6 +9,22 @@ Send real-time SABnzbd download notifications to your Discord server using a sim
 - 🔧 Easy setup with a webhook URL
 - 🖥 Cross-platform support (Windows/Linux/Mac)
 
+##Configuration
+
+Open the py and add your Discord webhook URL:
+
+WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK"
+
+In SABnzbd CONFIG - Notifications - Notification Script , add the script and set the following parameters:
+
+%c "%n" "%f"
+
+%c – Category
+
+%n – Name of the download
+
+%f – File path
+
 ## Requirements
 
 - Python 3.8+
